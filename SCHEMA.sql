@@ -5,35 +5,13 @@ SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0;
 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION';
 
 -- -----------------------------------------------------
--- Schema mydb
--- -----------------------------------------------------
-DROP SCHEMA IF EXISTS `mydb` ;
-
--- -----------------------------------------------------
--- Schema mydb
--- -----------------------------------------------------
-CREATE SCHEMA IF NOT EXISTS `mydb` ;
--- -----------------------------------------------------
 -- Schema tce_pb
 -- -----------------------------------------------------
-DROP SCHEMA IF EXISTS `tce_pb` ;
 
 -- -----------------------------------------------------
 -- Schema tce_pb
 -- -----------------------------------------------------
 CREATE SCHEMA IF NOT EXISTS `tce_pb` ;
-USE `mydb` ;
-
--- -----------------------------------------------------
--- Table `mydb`.`funcao`
--- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `mydb`.`funcao` (
-  `id_funcao` INT NOT NULL,
-  `codigo_funcao` VARCHAR(45) NOT NULL,
-  `descricao_funcao` VARCHAR(45) NOT NULL,
-  PRIMARY KEY (`id_funcao`))
-ENGINE = InnoDB;
-
 USE `tce_pb` ;
 
 -- -----------------------------------------------------
@@ -123,19 +101,6 @@ COLLATE = utf8mb4_0900_ai_ci;
 
 
 -- -----------------------------------------------------
--- Table `tce_pb`.`unidade_orcamentaria`
--- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `tce_pb`.`unidade_orcamentaria` (
-  `id_unidade_orcamentaria` INT NOT NULL AUTO_INCREMENT,
-  `codigo_unidade_orcamentaria` VARCHAR(20) NULL DEFAULT NULL,
-  `descricao_unidade_orcamentaria` VARCHAR(255) NULL DEFAULT NULL,
-  PRIMARY KEY (`id_unidade_orcamentaria`))
-ENGINE = InnoDB
-DEFAULT CHARACTER SET = utf8mb4
-COLLATE = utf8mb4_0900_ai_ci;
-
-
--- -----------------------------------------------------
 -- Table `tce_pb`.`obra`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `tce_pb`.`obra` (
@@ -181,6 +146,17 @@ COLLATE = utf8mb4_0900_ai_ci;
 
 
 -- -----------------------------------------------------
+-- Table `tce_pb`.`funcao`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `tce_pb`.`funcao` (
+  `id_funcao` INT NOT NULL,
+  `codigo_funcao` VARCHAR(45) NOT NULL,
+  `descricao_funcao` VARCHAR(45) NOT NULL,
+  PRIMARY KEY (`id_funcao`))
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
 -- Table `tce_pb`.`empenho`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `tce_pb`.`empenho` (
@@ -218,11 +194,6 @@ CREATE TABLE IF NOT EXISTS `tce_pb`.`empenho` (
   CONSTRAINT `fk_empenho_unidade_gestora`
     FOREIGN KEY (`unidade_gestora_id`)
     REFERENCES `tce_pb`.`unidade_gestora` (`id_unidade_gestora`),
-  CONSTRAINT `fk_empenho_unidade_orcamentaria`
-    FOREIGN KEY (`unidade_gestora_id`)
-    REFERENCES `tce_pb`.`unidade_orcamentaria` (`id_unidade_orcamentaria`)
-    ON DELETE RESTRICT
-    ON UPDATE RESTRICT,
   CONSTRAINT `fk_empenho_obra1`
     FOREIGN KEY (`obra_id`)
     REFERENCES `tce_pb`.`obra` (`id_obra`)
@@ -235,7 +206,7 @@ CREATE TABLE IF NOT EXISTS `tce_pb`.`empenho` (
     ON UPDATE NO ACTION,
   CONSTRAINT `fk_empenho_funcao1`
     FOREIGN KEY (`funcao_id`)
-    REFERENCES `mydb`.`funcao` (`id_funcao`)
+    REFERENCES `tce_pb`.`funcao` (`id_funcao`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB
@@ -306,24 +277,13 @@ COLLATE = utf8mb4_0900_ai_ci;
 
 
 -- -----------------------------------------------------
--- Table `tce_pb`.`empenho_has_unidade_orcamentaria`
+-- Table `tce_pb`.`unidade_orcamentaria`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `tce_pb`.`empenho_has_unidade_orcamentaria` (
-  `id_empenho` INT NOT NULL,
-  `id_unidade_orcamentaria` INT NOT NULL,
-  PRIMARY KEY (`id_empenho`, `id_unidade_orcamentaria`),
-  INDEX `fk_unidade_orçamentaria_has_empenho_empenho1_idx` (`id_empenho` ASC) VISIBLE,
-  INDEX `fk_unidade_orçamentaria_has_empenho_unidade_orçamentaria1_idx` (`id_unidade_orcamentaria` ASC) VISIBLE,
-  CONSTRAINT `fk_unidade_orçamentaria_has_empenho_unidade_orçamentaria1`
-    FOREIGN KEY (`id_unidade_orcamentaria`)
-    REFERENCES `tce_pb`.`unidade_orcamentaria` (`id_unidade_orcamentaria`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION,
-  CONSTRAINT `fk_unidade_orçamentaria_has_empenho_empenho1`
-    FOREIGN KEY (`id_empenho`)
-    REFERENCES `tce_pb`.`empenho` (`id_empenho`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION)
+CREATE TABLE IF NOT EXISTS `tce_pb`.`unidade_orcamentaria` (
+  `id_unidade_orcamentaria` INT NOT NULL AUTO_INCREMENT,
+  `codigo_unidade_orcamentaria` VARCHAR(20) NULL DEFAULT NULL,
+  `descricao_unidade_orcamentaria` VARCHAR(255) NULL DEFAULT NULL,
+  PRIMARY KEY (`id_unidade_orcamentaria`))
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8mb4
 COLLATE = utf8mb4_0900_ai_ci;
@@ -346,6 +306,30 @@ CREATE TABLE IF NOT EXISTS `tce_pb`.`empenho_has_fonte_recurso` (
   CONSTRAINT `fk_empenho_has_fonte_recurso_fonte_recurso1`
     FOREIGN KEY (`id_fonte_recurso`)
     REFERENCES `tce_pb`.`fonte_recurso` (`id_fonte_recurso`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = utf8mb4
+COLLATE = utf8mb4_0900_ai_ci;
+
+
+-- -----------------------------------------------------
+-- Table `tce_pb`.`empenho_has_unidade_orcamentaria`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `tce_pb`.`empenho_has_unidade_orcamentaria` (
+  `id_empenho` INT NOT NULL,
+  `id_unidade_orcamentaria` INT NOT NULL,
+  PRIMARY KEY (`id_empenho`, `id_unidade_orcamentaria`),
+  INDEX `fk_empenho_has_unidade_orcamentaria_unidade_orcamentaria1_idx` (`id_unidade_orcamentaria` ASC) VISIBLE,
+  INDEX `fk_empenho_has_unidade_orcamentaria_empenho1_idx` (`id_empenho` ASC) VISIBLE,
+  CONSTRAINT `fk_empenho_has_unidade_orcamentaria_empenho1`
+    FOREIGN KEY (`id_empenho`)
+    REFERENCES `tce_pb`.`empenho` (`id_empenho`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_empenho_has_unidade_orcamentaria_unidade_orcamentaria1`
+    FOREIGN KEY (`id_unidade_orcamentaria`)
+    REFERENCES `tce_pb`.`unidade_orcamentaria` (`id_unidade_orcamentaria`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB
