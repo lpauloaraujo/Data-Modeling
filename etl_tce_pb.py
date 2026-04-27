@@ -234,6 +234,14 @@ def processar_despesas(engine, df_despesas: pd.DataFrame):
         if col in df.columns:
             df[col] = df[col].astype(str).str.replace(r'\.0$', '', regex=True).str.strip()
 
+    # =========================================================================
+    # TRATAMENTO DE NULOS E PADRONIZAÇÃO DE TEXTO (MAIÚSCULAS)
+    # =========================================================================
+    # 1. Força o município a ficar em maiúsculo igual fizemos nas Licitações
+    if map_colunas['csv_municipio'] in df.columns:
+        df[map_colunas['csv_municipio']] = df[map_colunas['csv_municipio']].astype(str).str.strip().str.upper()
+
+    # 2. Trata nulos e força maiúsculas nas demais colunas descritivas
     colunas_descritivas = [
         map_colunas['csv_nome_fornecedor'], 
         map_colunas['csv_desc_programa'], 
@@ -244,8 +252,9 @@ def processar_despesas(engine, df_despesas: pd.DataFrame):
     
     for col in colunas_descritivas:
         if col in df.columns:
-            df[col] = df[col].fillna('NÃO INFORMADO').astype(str)
-            df.loc[df[col].str.strip().isin(['nan', 'None', '']), col] = 'NÃO INFORMADO'
+            # Preenche nulos e converte TUDO para maiúsculo
+            df[col] = df[col].fillna('NÃO INFORMADO').astype(str).str.upper()
+            df.loc[df[col].str.strip().isin(['NAN', 'NONE', '']), col] = 'NÃO INFORMADO'
 
     logging.info("Carregando Dimensões para Empenhos (isso pode demorar devido ao volume)...")
 
