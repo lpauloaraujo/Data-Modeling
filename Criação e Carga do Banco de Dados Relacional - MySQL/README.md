@@ -1,31 +1,50 @@
-# Carga do Banco de Dados Relacional - MySQL
+# Criação e Carga do Banco de Dados Relacional - MySQL
 
 Este módulo realiza o processo de ETL (Extract, Transform, Load) para população do banco de dados relacional com dados de licitações e despesas do TCE-PB.
 
-## Pré-requisitos
+## Guia de Instalação e Execução
 
-### 1. Criar o Schema do Banco de Dados
+Siga o passo a passo abaixo para configurar o ambiente, preparar o banco de dados e executar o pipeline ETL.
 
-Antes de executar este script de carga, é **obrigatório** criar o schema do banco de dados executando o script SQL de criação.
+## Passo 1: Clonar ou Baixar o Repositório
 
-Para instruções detalhadas sobre como criar o schema, consulte o [README principal do repositório](<https://github.com/lpauloaraujo/Data-Modeling>).
+Antes de tudo, você precisa ter os arquivos do projeto na sua máquina local.
 
-### 2. Preparar os Arquivos de Dados
+Abra o terminal e execute o comando abaixo para clonar o repositório:
 
-Os arquivos CSV com os dados de licitações e despesas devem estar localizados nesta mesma pasta (`Carga do Banco de Dados Relacional - MySQL/`).
+```bash
+git clone https://github.com/lpauloaraujo/Data-Modeling.git
+```
+> Alternativamente, você pode baixar o código-fonte em formato ZIP diretamente da página do GitHub e extraí-lo no seu computador.
+
+### Passo 2: Criar o Schema do Banco de Dados
+
+Antes de executar a carga de dados, é **obrigatório** criar a estrutura do banco. Faremos isso através do MySQL Workbench:
+
+1. Abra o **MySQL Workbench** e conecte-se à sua instância (recomendamos utilizar a conexão padrão: usuário `root`, host `localhost:3306`).
+2. Insira sua senha quando solicitada para entrar.
+3. No menu superior esquerdo, clique no ícone **"Open a SQL script file in a new query tab"** (ícone de uma pasta com um arquivo SQL).
+4. Navegue até a pasta `Data-Modeling > Criação e Carga do Banco de Dados Relacional - MySQL`, selecione o arquivo **SCHEMA** (`.sql`) e clique em **Abrir**.
+5. Execute o script clicando no ícone de raio amarelo (**Execute**).
+6. No painel lateral esquerdo (**Navigator**), clique com o botão direito na aba **Schemas** e selecione **Refresh All**.
+7. Verifique se o banco de dados `tce_pb` foi criado com sucesso, contendo as seguintes tabelas: `ação`, `empenho`, `fonte recurso`, `fornecedor`, `licitação`, `município`, `obra`, `programa`, `unidade gestora` e `unidade orçamentaria`.
+
+> Caso o schema ou as tabelas não tenham aparecido, tente executar o script novamente e repetir o Refresh All.
+
+### Passo 3: Preparar os Arquivos de Dados
+
+Os arquivos CSV com os dados do TCE-PB devem estar localizados nesta mesma pasta (`Criação e Carga do Banco de Dados Relacional - MySQL/`).
 
 #### Arquivos Necessários
 
 - **Licitações**: `licitacoes-2023.csv`, `licitacoes-2024.csv`, `licitacoes-2025.csv`
 - **Despesas**: `despesas-2023.csv`, `despesas-2024.csv`, `despesas-2025.csv`
 
-Para baixar os arquivos CSV, acesse: [Link para download dos arquivos](<https://dados-abertos.tce.pb.gov.br/dados-consolidados>)
+Para baixar os arquivos CSV, acesse o portal oficial: [Link para download dos arquivos](<https://dados-abertos.tce.pb.gov.br/dados-consolidados>)
 
-## Guia de Instalação e Execução
+### Passo 4: Instalar Dependências
 
-### Passo 1: Instalar Dependências
-
-Execute o comando abaixo para instalar todas as bibliotecas Python necessárias:
+Abra o terminal na pasta (`Criação e Carga do Banco de Dados Relacional - MySQL/`) e execute o comando abaixo para instalar todas as bibliotecas Python necessárias:
 
 ```bash
 pip install -r requirements.txt
@@ -36,7 +55,7 @@ pip install -r requirements.txt
 - `SQLAlchemy`: ORM para conexão com banco de dados
 - `pymysql`: Driver MySQL para Python
 
-### Passo 2: Configurar Variáveis de Ambiente (Opcional)
+### Passo 5: Configurar Variáveis de Ambiente (Opcional)
 
 O script suporta variáveis de ambiente para conexão com o banco de dados. Você pode definir:
 
@@ -65,15 +84,15 @@ Se as variáveis não forem definidas, o script solicitará a senha interativame
 - `DB_PORT`: `3306`
 - `DB_NAME`: `tce_pb`
 
-### Passo 3: Executar o Script de Carga
+### Passo 6: Executar o Script de Carga
 
-Execute o script Python:
+Com tudo configurado, execute o script Python:
 
 ```bash
 python etl_tce_pb.py
 ```
 
-### Passo 4: Escolher o Escopo de Dados
+### Passo 7: Escolher o Escopo de Dados
 
 Ao executar o script, será apresentado um menu com as seguintes opções:
 
