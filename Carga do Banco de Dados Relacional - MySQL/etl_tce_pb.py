@@ -1,6 +1,7 @@
 import os
 import glob
 import logging
+import getpass
 import pandas as pd
 from sqlalchemy import create_engine, text
 from sqlalchemy.exc import SQLAlchemyError
@@ -15,7 +16,7 @@ logging.basicConfig(
 )
 
 DB_USER = os.getenv("DB_USER", "root")
-DB_PASS = os.getenv("DB_PASS", "senha") # Substitua "senha" pela senha real do seu banco de dados
+DB_PASS = os.getenv("DB_PASS") or getpass.getpass("Digite a senha do banco de dados: ")
 DB_HOST = os.getenv("DB_HOST", "localhost")
 DB_PORT = os.getenv("DB_PORT", "3306")
 DB_NAME = os.getenv("DB_NAME", "tce_pb")
