@@ -19,7 +19,7 @@ Os arquivos CSV com os dados de licitações e despesas devem estar localizados 
 - **Licitações**: `licitacoes-2023.csv`, `licitacoes-2024.csv`, `licitacoes-2025.csv`
 - **Despesas**: `despesas-2023.csv`, `despesas-2024.csv`, `despesas-2025.csv`
 
-Para baixar os arquivos CSV, acesse: [Link para download dos arquivos](<https://dados-abertos.tce.pb.gov.br/>)
+Para baixar os arquivos CSV, acesse: [Link para download dos arquivos](<https://dados-abertos.tce.pb.gov.br/dados-consolidados>)
 
 ## Guia de Instalação e Execução
 
