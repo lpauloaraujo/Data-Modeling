@@ -1,4 +1,4 @@
-# Criação e Carga do Banco de Dados NoSQL (MongoDB)
+# Criação e Carga do Banco de Dados NoSQL - MongoDB
 
 Este módulo descreve o processo de migração do banco de dados relacional **MySQL** (já populado no módulo **"Criação e Carga do Banco de Dados Relacional - MySQL"**) para um banco **NoSQL MongoDB**, utilizando a ferramenta **MongoDB Relational Migrator**.
 
