@@ -55,7 +55,7 @@ A organização do repositório segue uma separação por etapas/módulos do tra
 ```text
 Data-Modeling/
 ├─ README.md
-├─ (arquivo(s) do modelo) *.mwb
+├─ tce_pb_model.mwb
 ├─ Criação e Carga do Banco de Dados Relacional - MySQL/
 │  ├─ README.md
 │  ├─ SCHEMA.sql
@@ -67,7 +67,7 @@ Data-Modeling/
    └─ migracao_tce_pb.py
 ```
 
-> Dica: caso você não encontre o arquivo `.mwb` na raiz, procure por ele nas pastas do projeto (ou utilize a busca do GitHub por `*.mwb`).
+> Dica: caso você não encontre o arquivo `.mwb` na raiz, procure por ele nas pastas do projeto (ou utilize a busca do GitHub por `tce_pb_model.mwb`).
 
 ---
 
@@ -123,7 +123,7 @@ O arquivo `.mwb` é o projeto do MySQL Workbench que contém o modelo/DER.
 Dica (opcional): você pode localizar via terminal (Linux/macOS/Git Bash):
 
 ```bash
-find . -name "*.mwb"
+find . -name "tce_pb_model.mwb"
 ```
 
 ---
