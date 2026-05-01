@@ -61,7 +61,7 @@ Data-Modeling/
 │  ├─ *.sql
 │  ├─ requirements.txt
 │  └─ *.py
-└─ Criação e Carga do Banco de Dados NoSQL/
+└─ Criação e Carga do Banco de Dados NoSQL - MongoDB/
    └─ README.md
 ```
 
