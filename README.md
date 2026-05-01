@@ -58,11 +58,13 @@ Data-Modeling/
 ├─ (arquivo(s) do modelo) *.mwb
 ├─ Criação e Carga do Banco de Dados Relacional - MySQL/
 │  ├─ README.md
-│  ├─ *.sql
+│  ├─ SCHEMA.sql
 │  ├─ requirements.txt
-│  └─ *.py
+│  └─ etl_tce_pb.py
 └─ Criação e Carga do Banco de Dados NoSQL - MongoDB/
-   └─ README.md
+   ├─ README.md
+   ├─ requirements.txt
+   └─ migracao_tce_pb.py
 ```
 
 > Dica: caso você não encontre o arquivo `.mwb` na raiz, procure por ele nas pastas do projeto (ou utilize a busca do GitHub por `*.mwb`).
