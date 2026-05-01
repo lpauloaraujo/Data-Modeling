@@ -1,6 +1,6 @@
 # Criação e Carga do Banco de Dados NoSQL - MongoDB
 
-Este módulo descreve o processo de migração do banco de dados relacional **MySQL** (já populado no módulo **"Criação e Carga do Banco de Dados Relacional - MySQL"**) para um banco **NoSQL MongoDB**, utilizando a ferramenta **MongoDB Relational Migrator**.
+Este módulo descreve o processo de migração do banco de dados relacional **MySQL** (já populado no módulo **"Criação e Carga do Banco de Dados Relacional - MySQL"**) para um banco **NoSQL MongoDB**.
 
 A migração parte do schema e dados existentes no MySQL (`tce_pb`) e cria/abastece uma base MongoDB (ex.: `tce_pb_mongo`) no servidor local.
 
@@ -10,144 +10,18 @@ A migração parte do schema e dados existentes no MySQL (`tce_pb`) e cria/abast
 
 Antes de iniciar:
 
-- Ter concluído a etapa anterior: **MySQL `tce_pb` criado e populado**
-- Ter o **MySQL Server** rodando localmente (ex.: `localhost:3306`)
+- Ter concluído a etapa anterior: **MySQL** `tce_pb` **criado e populado**
 - Ter o **MongoDB** rodando localmente (ex.: `localhost:27017`)
-- Ter o **MySQL Workbench** instalado (usado para configurar timezone e conferir tabelas)
 
 ---
 
 ## Ferramentas necessárias
 
-### 1) MongoDB Relational Migrator
-Ferramenta usada para conectar no MySQL e migrar schema/dados para o MongoDB.
-
-Download (oficial):
-https://www.mongodb.com/try/download/relational-migrator
-
-### 2) MongoDB Compass
+### 1) MongoDB Compass
 Interface gráfica para visualizar/validar as coleções e documentos no MongoDB.
 
 Download (oficial):
 https://www.mongodb.com/products/tools/compass
-
----
-
-## Instalação (Relational Migrator e Compass)
-
-Para **cada instalador**:
-
-1. Baixe o instalador pelo link oficial
-2. Execute o arquivo baixado
-3. Aceite os termos (se solicitado)
-4. Clique em **Install / Instalar**
-5. Ao final, clique em **Finish / Finalizar**
-
----
-
-## Abrindo o MongoDB Relational Migrator
-
-Após instalar:
-
-1. Pesquise no computador por **MongoDB Relational Migration** (ou **Relational Migrator**)
-2. Abra o programa
-
----
-
-## Fluxo 1 — Conectar o MySQL (fonte)
-
-Ao abrir o Relational Migrator:
-
-1. Feche a tela **Get Started** (se aparecer)
-2. Clique em **Connect Database**
-3. Clique em **Add a new connection**
-4. Em **Database type**, selecione **MySQL**
-5. Preencha:
-
-   - **Host**: `localhost`
-   - **Database**: `tce_pb`
-   - **Username**: `root`
-   - **Password**: *sua senha*
-
-6. Clique em **Connect**
-7. Selecione o banco **`tce_pb`**
-8. Escolha a opção:
-
-   **Start with a MongoDB schema that matches your relational schema**
-
-9. Clique em **Next**
-10. Em **Project name**, use: `tce_pb`
-11. Clique em **Done**
-
----
-
-## Se aparecer erro de driver JDBC do MySQL
-
-Em alguns casos, ao tentar conectar no MySQL, pode aparecer:
-
-> **JDBC driver for MySQL not found. Please download the JAR file, upload, and restart Relational Migrator.**
-
-Quando isso acontecer, faça o seguinte:
-
-### 1) Baixar o driver oficial do MySQL (Connector/J)
-
-Baixe o driver oficial do MySQL (Connector/J) neste link:
-
-https://dev.mysql.com/downloads/connector/j/
-
-- **Windows:** selecione a opção **Platform Independent** (ela disponibiliza o arquivo `.jar` que o Relational Migrator precisa).
-
-Nome esperado (exemplos):
-
-- `mysql-connector-j-8.0.xx.jar`  
-ou
-- `mysql-connector-j-9.x.x.jar`
-
-### 2) Fazer upload no Relational Migrator
-
-Quando aparecer a mensagem solicitando o driver:
-
-1. Clique em **Upload**
-2. Selecione o arquivo `.jar` baixado
-3. Reinicie o **Relational Migrator**
-
-### 3) Tentar conectar novamente
-
-Após reiniciar, repita o processo de conexão no MySQL.
-
----
-
-## Configuração de Timezone (IMPORTANTE)
-
-Antes de criar o **criar o job de migração para o MongoDB**, execute no **MySQL Workbench**:
-
-```sql
-SET GLOBAL time_zone = '-03:00';
-SET time_zone = '-03:00';
-```
-
-Isso ajuda a evitar inconsistências relacionadas a datas/horários durante a migração.
-
----
-
-## Fluxo 2 — Criar o Job de Migração para MongoDB (destino)
-
-Agora vamos criar o job que migra os dados para o MongoDB:
-
-1. Acesse a seção **Data Migration**
-2. Clique em **Create migration job**
-3. Clique em **Add a new connection**
-4. Em **MongoDB connection string (URI)**, use:
-
-   `mongodb://localhost:27017`
-
-5. Informe (ou selecione) o banco de destino como:
-
-   `tce_pb_mongo`
-
-6. Clique em **Connect**
-7. Revise o **Summary**
-8. Clique em **Start**
 
 ---
 
@@ -166,10 +40,24 @@ Após finalizar a migração:
 
 ---
 
-## Observações
+## Diferença Arquitetural: Modelagem MySQL vs MongoDB
 
-- Esta etapa **depende** do MySQL já estar **criado e populado** (módulo anterior).
-- O padrão deste tutorial assume ambiente local:
-  - MySQL em `localhost:3306`
-  - MongoDB em `localhost:27017`
-- O nome do banco de destino no MongoDB pode ser alterado, mas recomenda-se manter um nome claro (ex.: `tce_pb_mongo`) para evitar confusão com o schema relacional.
+Durante o processo de migração, a estrutura do banco de dados sofreu uma grande transformação para se adequar ao paradigma NoSQL. É importante entender que **um banco de dados orientado a documentos (MongoDB) não deve ser um espelho de um banco relacional (MySQL)**.
+
+Abaixo estão os principais conceitos aplicados nesta mudança estrutural:
+
+### 1. De Normalização (MySQL) para Desnormalização (MongoDB)
+* **No MySQL (Relacional):** Os dados são divididos em múltiplas tabelas (normalização) para evitar duplicação. Para visualizar as informações completas de um empenho, o banco de dados precisa realizar vários `JOINs` entre tabelas como `fornecedor`, `municipio`, `licitacao`, etc.
+* **No MongoDB (NoSQL):** A regra de ouro é: *"dados que são acessados juntos, devem ser armazenados juntos"*. O objetivo é trazer a informação completa com uma única consulta, garantindo alta performance na leitura. Para isso, utilizamos a técnica de **Desnormalização por Documentos Embutidos (Embedding)**.
+
+### 2. A Coleção Central (empenhos)
+Analisando o domínio de negócio (TCE-PB), a entidade central é o **Empenho**. 
+Em vez de criarmos 10 coleções diferentes no MongoDB e tentar relacioná-las depois, criamos uma única coleção principal chamada `empenhos`. 
+
+Todas as outras tabelas que qualificam o empenho foram transformadas em **sub-documentos (objetos embutidos)** dentro do próprio documento do empenho.
+* Entidades como `fornecedor`, `obra`, `fonte_recurso`, `municipio` e `unidade_gestora` agora residem dentro de cada empenho.
+* Foi criada uma hierarquia de aninhamento no Nível 2: O `programa` foi embutido dentro da `acao`, e a `acao` foi embutida no `empenho`, respeitando a lógica orçamentária.
+
+### 3. Remoção das Chaves Estrangeiras (Limpeza)
+No mundo relacional, as Foreign Keys (IDs como `credor_id`, `municipio_id`) servem como "pontes" para buscar dados em outras tabelas. 
+Como no MongoDB nós trouxemos o objeto completo (ex: o documento inteiro do fornecedor com CNPJ e Nome) para dentro do empenho, **essas chaves estrangeiras soltas na raiz perderam a utilidade**. Por isso, durante o *Fluxo 2*, nós removemos todos esses campos terminados em "Id" que ficavam sobrando, garantindo um documento JSON limpo, legível e otimizado para o consumo de APIs.
