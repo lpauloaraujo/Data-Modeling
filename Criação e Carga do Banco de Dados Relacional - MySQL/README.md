@@ -2,6 +2,18 @@
 
 Este módulo realiza o processo de ETL (Extract, Transform, Load) para população do banco de dados relacional com dados de licitações e despesas do TCE-PB.
 
+## Pré-requisitos
+
+Antes de iniciar, é necessário ter instalado:
+
+- **MySQL Server** (o banco de dados, precisa estar em execução localmente, ex.: `localhost:3306`)
+- **MySQL Workbench** (para executar o script `.sql`, gerenciar o schema e inspecionar as tabelas)
+
+Download (MySQL Community Edition):
+https://www.mysql.com/downloads/
+
+> Observação: o **MySQL Workbench** pode ser usado apenas como interface/cliente, mas para **criar o schema e carregar os dados** você precisa do **MySQL Server** instalado e rodando.
+
 ## Guia de Instalação e Execução
 
 Siga o passo a passo abaixo para configurar o ambiente, preparar o banco de dados e executar o pipeline ETL.
