@@ -54,7 +54,29 @@ Os arquivos CSV com os dados do TCE-PB devem estar localizados nesta mesma pasta
 
 Para baixar os arquivos CSV, acesse o portal oficial: [Link para download dos arquivos](<https://dados-abertos.tce.pb.gov.br/dados-consolidados>)
 
-### Passo 4: Instalar Dependências
+### Passo 4: Criar e ativar um ambiente virtual (venv) (recomendado)
+
+Recomendado para isolar as dependências do projeto.
+
+**Windows (PowerShell):**
+```powershell
+python -m venv .venv
+.\.venv\Scripts\Activate.ps1
+python -m pip install --upgrade pip
+```
+
+**Linux/macOS (bash/zsh):**
+```bash
+python3 -m venv .venv
+source .venv/bin/activate
+python -m pip install --upgrade pip
+```
+
+> Dica: depois de ativar, seu terminal geralmente mostra `(.venv)` no início da linha.
+
+---
+
+### Passo 5: Instalar Dependências
 
 Abra o terminal na pasta (`Criação e Carga do Banco de Dados Relacional - MySQL/`) e execute o comando abaixo para instalar todas as bibliotecas Python necessárias:
 
@@ -67,7 +89,7 @@ pip install -r requirements.txt
 - `SQLAlchemy`: ORM para conexão com banco de dados
 - `pymysql`: Driver MySQL para Python
 
-### Passo 5: Configurar Variáveis de Ambiente (Opcional)
+### Passo 6: Configurar Variáveis de Ambiente (Opcional)
 
 O script suporta variáveis de ambiente para conexão com o banco de dados. Você pode definir:
 
@@ -96,7 +118,7 @@ Se as variáveis não forem definidas, o script solicitará a senha interativame
 - `DB_PORT`: `3306`
 - `DB_NAME`: `tce_pb`
 
-### Passo 6: Executar o Script de Carga
+### Passo 7: Executar o Script de Carga
 
 Com tudo configurado, execute o script Python:
 
@@ -104,7 +126,7 @@ Com tudo configurado, execute o script Python:
 python etl_tce_pb.py
 ```
 
-### Passo 7: Escolher o Escopo de Dados
+### Passo 8: Escolher o Escopo de Dados
 
 Ao executar o script, será apresentado um menu com as seguintes opções:
 
