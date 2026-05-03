@@ -55,16 +55,23 @@ A organização do repositório segue uma separação por etapas/módulos do tra
 ```text
 Data-Modeling/
 ├─ README.md
+├─ LICENSE
+├─ .gitignore
 ├─ tce_pb_model.mwb
 ├─ Criação e Carga do Banco de Dados Relacional - MySQL/
 │  ├─ README.md
 │  ├─ SCHEMA.sql
 │  ├─ requirements.txt
 │  └─ etl_tce_pb.py
-└─ Criação e Carga do Banco de Dados NoSQL - MongoDB/
+├─ Criação e Carga do Banco de Dados NoSQL - MongoDB/
+│  ├─ README.md
+│  ├─ requirements.txt
+│  └─ migracao_tce_pb.py
+└─ Métricas de Desempenho ETL/
    ├─ README.md
    ├─ requirements.txt
-   └─ migracao_tce_pb.py
+   ├─ SCHEMA_desempenho.sql
+   └─ etl_tce_pb_desempenho.py
 ```
 
 > Dica: caso você não encontre o arquivo `.mwb` na raiz, procure por ele nas pastas do projeto (ou utilize a busca do GitHub por `tce_pb_model.mwb`).
@@ -157,13 +164,13 @@ Com o modelo aberto:
 
 **Grupo 04**
 
-- Tiago Garcia  
-- Luiz Dutra  
-- Lucas Paulo  
-- Guilherme Silva  
-- Diego Bernado  
-- Marcos Vinícius  
-- Yonara Silva  
+- [Diego Bernado](https://github.com/diegobrnrd)
+- [Guilherme Silva](https://github.com/guilherme-silva72)
+- [Lucas Paulo](https://github.com/lpauloaraujo)
+- [Luiz Dutra](https://github.com/LuizzDutra)
+- [Marcos Vinícius](https://github.com/Markin005)
+- [Tiago Garcia](https://github.com/tigsg)      
+- [Yonara Silva](https://github.com/YonaraUFRPE)
 
 ---
 
