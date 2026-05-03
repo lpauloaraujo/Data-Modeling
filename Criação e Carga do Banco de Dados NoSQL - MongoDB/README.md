@@ -11,6 +11,7 @@ A migração parte do schema e dados existentes no MySQL (`tce_pb`) e cria/abast
 Antes de iniciar:
 
 - Ter concluído a etapa anterior: **MySQL** `tce_pb` **criado e populado**
+- Ter o **MySQL Server** rodando localmente (ex.: `localhost:3306`)
 - Ter o **MongoDB** rodando localmente (ex.: `localhost:27017`)
 
 ---
