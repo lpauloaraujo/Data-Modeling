@@ -2,6 +2,8 @@
 
 Este módulo realiza o processo de ETL (Extract, Transform, Load) para população do banco de dados relacional com dados de licitações e despesas do TCE-PB.
 
+---
+
 ## Pré-requisitos
 
 Antes de iniciar, é necessário ter instalado:
@@ -14,9 +16,13 @@ https://www.mysql.com/downloads/
 
 > Observação: o **MySQL Workbench** pode ser usado apenas como interface/cliente, mas para **criar o schema e carregar os dados** você precisa do **MySQL Server** instalado e rodando.
 
+---
+
 ## Guia de Instalação e Execução
 
 Siga o passo a passo abaixo para configurar o ambiente, preparar o banco de dados e executar o pipeline ETL.
+
+---
 
 ## Passo 1: Clonar ou Baixar o Repositório
 
@@ -28,6 +34,8 @@ Abra o terminal e execute o comando abaixo para clonar o repositório:
 git clone https://github.com/lpauloaraujo/Data-Modeling.git
 ```
 > Alternativamente, você pode baixar o código-fonte em formato ZIP diretamente da página do GitHub e extraí-lo no seu computador.
+
+---
 
 ### Passo 2: Criar o Schema do Banco de Dados
 
@@ -43,6 +51,8 @@ Antes de executar a carga de dados, é **obrigatório** criar a estrutura do ban
 
 > Caso o schema ou as tabelas não tenham aparecido, tente executar o script novamente e repetir o Refresh All.
 
+---
+
 ### Passo 3: Preparar os Arquivos de Dados
 
 Os arquivos CSV com os dados do TCE-PB devem estar localizados nesta mesma pasta (`Criação e Carga do Banco de Dados Relacional - MySQL/`).
@@ -53,6 +63,8 @@ Os arquivos CSV com os dados do TCE-PB devem estar localizados nesta mesma pasta
 - **Despesas**: `despesas-2023.csv`, `despesas-2024.csv`, `despesas-2025.csv`
 
 Para baixar os arquivos CSV, acesse o portal oficial: [Link para download dos arquivos](<https://dados-abertos.tce.pb.gov.br/dados-consolidados>)
+
+---
 
 ### Passo 4: Criar e ativar um ambiente virtual (venv) (recomendado)
 
@@ -89,6 +101,8 @@ pip install -r requirements.txt
 - `SQLAlchemy`: ORM para conexão com banco de dados
 - `pymysql`: Driver MySQL para Python
 
+---
+
 ### Passo 6: Configurar Variáveis de Ambiente (Opcional)
 
 O script suporta variáveis de ambiente para conexão com o banco de dados. Você pode definir:
@@ -118,6 +132,8 @@ Se as variáveis não forem definidas, o script solicitará a senha interativame
 - `DB_PORT`: `3306`
 - `DB_NAME`: `tce_pb`
 
+---
+
 ### Passo 7: Executar o Script de Carga
 
 Com tudo configurado, execute o script Python:
@@ -125,6 +141,8 @@ Com tudo configurado, execute o script Python:
 ```bash
 python etl_tce_pb.py
 ```
+
+---
 
 ### Passo 8: Escolher o Escopo de Dados
 
@@ -147,6 +165,8 @@ Escolha o escopo de dados que deseja processar:
 - Menor consumo de memória
 - Facilita ajustes corretivos se necessário
 
+---
+
 ## O que o Script Faz
 
 O script `etl_tce_pb.py` realiza as seguintes operações:
@@ -167,6 +187,8 @@ O script `etl_tce_pb.py` realiza as seguintes operações:
 - Carrega tabelas de fatos (Licitação, Empenho)
 - Mantém referências de integridade entre dimensões e fatos
 
+---
+
 ## Monitoramento da Execução
 
 Durante a execução, o script gera logs com informações sobre:
@@ -177,6 +199,8 @@ Durante a execução, o script gera logs com informações sobre:
 - Mensagens de erro ou aviso (se houver)
 
 Os logs são exibidos no console com timestamp e nível de severidade.
+
+---
 
 ## Troubleshooting
 
@@ -197,6 +221,8 @@ Os logs são exibidos no console com timestamp e nível de severidade.
 ### Erro de Memória
 - Se receber erro de memória ao processar todos os anos, execute a carga ano a ano (veja a recomendação acima)
 
+---
+
 ## Estrutura do Código
 
 - **Configurações e Constantes:** Definições de variáveis de ambiente e parâmetros
@@ -206,6 +232,8 @@ Os logs são exibidos no console com timestamp e nível de severidade.
 - **Funções de Transformação e Carga:** Processamento específico de licitações e despesas
 - **Orquestração:** Pipeline principal que coordena todas as etapas
 - **Execução:** Menu interativo para o usuário escolher o escopo de dados
+
+---
 
 ## Notas Importantes
 
