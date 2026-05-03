@@ -147,5 +147,3 @@ As medições são exibidas no console junto aos logs do pipeline.
 
 - **Execução muito lenta**
   - É esperado em volumes grandes; prefira executar por ano para controlar e comparar tempos.
-
----
