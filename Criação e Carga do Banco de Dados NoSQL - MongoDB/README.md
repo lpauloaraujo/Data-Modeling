@@ -75,7 +75,29 @@ cd "Data-Modeling/Criação e Carga do Banco de Dados NoSQL - MongoDB"
 
 ---
 
-### Passo 5: Instalar dependências
+### Passo 5: Criar e ativar um ambiente virtual (venv) (recomendado)
+
+Recomendado para isolar as dependências do projeto.
+
+**Windows (PowerShell):**
+```powershell
+python -m venv .venv
+.\.venv\Scripts\Activate.ps1
+python -m pip install --upgrade pip
+```
+
+**Linux/macOS (bash/zsh):**
+```bash
+python3 -m venv .venv
+source .venv/bin/activate
+python -m pip install --upgrade pip
+```
+
+> Dica: depois de ativar, seu terminal geralmente mostra `(.venv)` no início da linha.
+
+---
+
+### Passo 6: Instalar dependências
 
 Com o terminal na pasta do módulo, instale as bibliotecas necessárias:
 
@@ -89,7 +111,7 @@ pip install -r requirements.txt
 
 ---
 
-### Passo 6: Conferir configurações de conexão (se necessário)
+### Passo 7: Conferir configurações de conexão (se necessário)
 
 O script de migração (`migracao_tce_pb.py`) usa por padrão:
 
@@ -113,7 +135,7 @@ Se o seu ambiente for diferente (host/porta/usuário), ajuste as constantes no i
 
 ---
 
-### Passo 7: Executar o script de migração
+### Passo 8: Executar o script de migração
 
 Execute o script:
 
