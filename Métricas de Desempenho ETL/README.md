@@ -55,7 +55,29 @@ Isso criará o schema:
 
 ---
 
-### 2) Instalar dependências
+### 2) Criar e ativar um ambiente virtual (venv) (recomendado)
+
+Recomendado para isolar as dependências do projeto.
+
+**Windows (PowerShell):**
+```powershell
+python -m venv .venv
+.\.venv\Scripts\Activate.ps1
+python -m pip install --upgrade pip
+```
+
+**Linux/macOS (bash/zsh):**
+```bash
+python3 -m venv .venv
+source .venv/bin/activate
+python -m pip install --upgrade pip
+```
+
+> Dica: depois de ativar, seu terminal geralmente mostra `(.venv)` no início da linha.
+
+---
+
+### 3) Instalar dependências
 
 Com o terminal aberto **nesta pasta** (onde está o arquivo `requirements.txt`), instale as dependências com:
 
@@ -72,7 +94,7 @@ pip install -r requirements.txt
 
 ---
 
-### 3) Executar o ETL com métricas
+### 4) Executar o ETL com métricas
 
 No terminal, entre na pasta **Métricas de Desempenho ETL** e execute:
 
