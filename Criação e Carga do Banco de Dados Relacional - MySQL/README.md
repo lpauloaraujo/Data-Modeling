@@ -125,7 +125,7 @@ export DB_PORT="3306"
 export DB_NAME="tce_pb"
 ```
 
-Se as variáveis não forem definidas, o script solicitará a senha interativamente e usará os valores padrão:
+Se as variáveis não forem definidas, o script solicitará a senha interativamente (a senha **não aparece** enquanto você digita) e usará os valores padrão:
 
 - `DB_USER`: `root`
 - `DB_HOST`: `localhost`
