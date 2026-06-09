@@ -1,0 +1,36 @@
+<Schema name="New Schema1">
+  <Cube name="CuboEmpenho" visible="true" cache="true" enabled="true">
+    <Table name="fato_empenho">
+    </Table>
+    <Dimension type="StandardDimension" visible="true" foreignKey="sk_estrutura_admin" name="DimensionEstruturaAdmin">
+      <Hierarchy name="HierarchyEstruturaAdmin" visible="true" hasAll="true" primaryKey="sk_estrutura_admin">
+        <Table name="dim_estrutura_administrativa" alias="">
+        </Table>
+        <Level name="CodUnidadeGestora" visible="true" table="dim_estrutura_administrativa" column="codigo_unidade_gestora" type="String" uniqueMembers="false" levelType="Regular">
+        </Level>
+        <Level name="DescUnidadeGestora" visible="true" table="dim_estrutura_administrativa" column="descricao_unidade_gestora" type="String" uniqueMembers="false" levelType="Regular">
+        </Level>
+        <Level name="CodUnidadeOrcamentaria" visible="true" table="dim_estrutura_administrativa" column="codigo_unidade_orcamentaria" type="String" uniqueMembers="false" levelType="Regular">
+        </Level>
+        <Level name="DescUnidadeOrcamentaria" visible="true" table="dim_estrutura_administrativa" column="descricao_unidade_orcamentaria" type="String" uniqueMembers="false">
+        </Level>
+        <Level name="NomeMunicipio" visible="true" table="dim_estrutura_administrativa" column="nome_municipio" type="String" uniqueMembers="false" levelType="Regular">
+        </Level>
+      </Hierarchy>
+    </Dimension>
+    <Dimension type="StandardDimension" visible="true" foreignKey="sk_fornecedor" name="Dimension">
+      <Hierarchy name="HierarchyFornecedor" visible="true" hasAll="true">
+        <Table name="dim_fornecedor">
+        </Table>
+        <Level name="CpfCnpj" visible="true" table="dim_fornecedor" column="cpf_cnpj" type="String" uniqueMembers="false" levelType="Regular">
+        </Level>
+      </Hierarchy>
+    </Dimension>
+    <Measure name="ValorEmpenhado" column="valor_empenhado" aggregator="distinct-count" visible="true">
+    </Measure>
+    <Measure name="ValorLiquidado" column="valor_liquidado" aggregator="distinct-count" visible="true">
+    </Measure>
+    <Measure name="ValorPago" column="valor_pago" aggregator="distinct-count" visible="true">
+    </Measure>
+  </Cube>
+</Schema>
