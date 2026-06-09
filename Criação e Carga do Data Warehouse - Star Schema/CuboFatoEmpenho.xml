@@ -1,36 +1,98 @@
-<Schema name="New Schema1">
-  <Cube name="CuboEmpenho" visible="true" cache="true" enabled="true">
+<Schema name="DW_Empenho">
+  <Cube name="Empenho" visible="true" defaultMeasure="Valor Empenhado" cache="true" enabled="true">
     <Table name="fato_empenho">
     </Table>
-    <Dimension type="StandardDimension" visible="true" foreignKey="sk_estrutura_admin" name="DimensionEstruturaAdmin">
-      <Hierarchy name="HierarchyEstruturaAdmin" visible="true" hasAll="true" primaryKey="sk_estrutura_admin">
-        <Table name="dim_estrutura_administrativa" alias="">
+    <Dimension type="TimeDimension" visible="true" foreignKey="sk_tempo" highCardinality="false" name="Tempo">
+      <Hierarchy visible="true" hasAll="true" allMemberName="Todos os Per&#237;odos" primaryKey="sk_tempo">
+        <Table name="dim_tempo">
         </Table>
-        <Level name="CodUnidadeGestora" visible="true" table="dim_estrutura_administrativa" column="codigo_unidade_gestora" type="String" uniqueMembers="false" levelType="Regular">
+        <Level name="Ano" visible="true" column="ano" nameColumn="ano" type="Integer" uniqueMembers="true" levelType="TimeYears" hideMemberIf="Never">
         </Level>
-        <Level name="DescUnidadeGestora" visible="true" table="dim_estrutura_administrativa" column="descricao_unidade_gestora" type="String" uniqueMembers="false" levelType="Regular">
+        <Level name="Semestre" visible="true" column="semestre" nameColumn="semestre" type="Integer" uniqueMembers="false" levelType="TimeHalfYears" hideMemberIf="Never">
         </Level>
-        <Level name="CodUnidadeOrcamentaria" visible="true" table="dim_estrutura_administrativa" column="codigo_unidade_orcamentaria" type="String" uniqueMembers="false" levelType="Regular">
+        <Level name="Trimestre" visible="true" column="trimestre" nameColumn="nome_trimestre" type="Integer" uniqueMembers="false" levelType="TimeQuarters" hideMemberIf="Never">
         </Level>
-        <Level name="DescUnidadeOrcamentaria" visible="true" table="dim_estrutura_administrativa" column="descricao_unidade_orcamentaria" type="String" uniqueMembers="false">
+        <Level name="M&#234;s" visible="true" column="mes" nameColumn="nome_mes" type="Time" uniqueMembers="false" levelType="TimeMonths" hideMemberIf="Never">
         </Level>
-        <Level name="NomeMunicipio" visible="true" table="dim_estrutura_administrativa" column="nome_municipio" type="String" uniqueMembers="false" levelType="Regular">
+        <Level name="Dia" visible="true" column="dia" nameColumn="data" type="Integer" uniqueMembers="false" levelType="TimeDays" hideMemberIf="Never">
         </Level>
       </Hierarchy>
     </Dimension>
-    <Dimension type="StandardDimension" visible="true" foreignKey="sk_fornecedor" name="Dimension">
-      <Hierarchy name="HierarchyFornecedor" visible="true" hasAll="true">
+    <Dimension visible="true" foreignKey="sk_estrutura_admin" highCardinality="false" name="Estrutura Administrativa">
+      <Hierarchy visible="true" hasAll="true" allMemberName="Todas as Estruturas" primaryKey="sk_estrutura_admin">
+        <Table name="dim_estrutura_administrativa">
+        </Table>
+        <Level name="Munic&#237;pio" visible="true" column="nome_municipio" type="String" uniqueMembers="true" levelType="Regular" hideMemberIf="Never">
+        </Level>
+        <Level name="Unidade Gestora" visible="true" column="codigo_unidade_gestora" nameColumn="descricao_unidade_gestora" type="String" uniqueMembers="false" levelType="Regular" hideMemberIf="Never">
+        </Level>
+        <Level name="Unidade Or&#231;ament&#225;ria" visible="true" column="codigo_unidade_orcamentaria" nameColumn="descricao_unidade_orcamentaria" type="String" uniqueMembers="false" levelType="Regular" hideMemberIf="Never">
+        </Level>
+      </Hierarchy>
+    </Dimension>
+    <Dimension visible="true" foreignKey="sk_fornecedor" highCardinality="false" name="Fornecedor">
+      <Hierarchy visible="true" hasAll="true" allMemberName="Todos os Fornecedores" primaryKey="sk_fornecedor">
         <Table name="dim_fornecedor">
         </Table>
-        <Level name="CpfCnpj" visible="true" table="dim_fornecedor" column="cpf_cnpj" type="String" uniqueMembers="false" levelType="Regular">
+        <Level name="Tipo Pessoa" visible="true" column="tipo_pessoa" type="String" uniqueMembers="false" levelType="Regular" hideMemberIf="Never">
+        </Level>
+        <Level name="Fornecedor" visible="true" column="cpf_cnpj" nameColumn="nome" type="String" uniqueMembers="true" levelType="Regular" hideMemberIf="Never">
         </Level>
       </Hierarchy>
     </Dimension>
-    <Measure name="ValorEmpenhado" column="valor_empenhado" aggregator="distinct-count" visible="true">
+    <Dimension visible="true" foreignKey="sk_programa_acao" highCardinality="false" name="Programa de A&#231;&#227;o">
+      <Hierarchy visible="true" hasAll="true" allMemberName="Todos os Programas" primaryKey="sk_programa_acao">
+        <Table name="dim_programa_acao">
+        </Table>
+        <Level name="Programa" visible="true" column="codigo_programa" nameColumn="descricao_programa" type="String" uniqueMembers="true" levelType="Regular" hideMemberIf="Never">
+        </Level>
+        <Level name="A&#231;&#227;o" visible="true" column="codigo_acao" nameColumn="descricao_acao" type="String" uniqueMembers="false" levelType="Regular" hideMemberIf="Never">
+        </Level>
+      </Hierarchy>
+    </Dimension>
+    <Dimension visible="true" foreignKey="sk_fonte_recurso" highCardinality="false" name="Fonte de Recurso">
+      <Hierarchy visible="true" hasAll="true" allMemberName="Todas as Fontes" primaryKey="sk_fonte_recurso">
+        <Table name="dim_fonte_recurso">
+        </Table>
+        <Level name="Ano Fonte" visible="true" column="ano_fonte" type="String" uniqueMembers="false" levelType="Regular" hideMemberIf="Never">
+        </Level>
+        <Level name="Fonte de Recurso" visible="true" column="codigo_fonte_recurso" nameColumn="descricao_fonte_recurso" type="String" uniqueMembers="false" levelType="Regular" hideMemberIf="Never">
+        </Level>
+      </Hierarchy>
+    </Dimension>
+    <Dimension visible="true" foreignKey="sk_licitacao" highCardinality="false" name="Licita&#231;&#227;o">
+      <Hierarchy visible="true" hasAll="true" allMemberName="Todas as Licita&#231;&#245;es" primaryKey="sk_licitacao">
+        <Table name="dim_licitacao">
+        </Table>
+        <Level name="Modalidade" visible="true" column="modalidade" type="String" uniqueMembers="false" levelType="Regular" hideMemberIf="Never">
+        </Level>
+        <Level name="Ano Licita&#231;&#227;o" visible="true" column="ano_licitacao" type="Integer" uniqueMembers="false" levelType="Regular" hideMemberIf="Never">
+        </Level>
+        <Level name="Licita&#231;&#227;o" visible="true" column="numero_licitacao" type="String" uniqueMembers="false" levelType="Regular" hideMemberIf="Never">
+        </Level>
+      </Hierarchy>
+    </Dimension>
+    <Measure name="Valor Empenhado" column="valor_empenhado" datatype="Numeric" formatString="#,##0.00" aggregator="sum" visible="true">
     </Measure>
-    <Measure name="ValorLiquidado" column="valor_liquidado" aggregator="distinct-count" visible="true">
+    <Measure name="Valor Liquidado" column="valor_liquidado" datatype="Numeric" formatString="#,##0.00" aggregator="sum" visible="true">
     </Measure>
-    <Measure name="ValorPago" column="valor_pago" aggregator="distinct-count" visible="true">
+    <Measure name="Valor Pago" column="valor_pago" datatype="Numeric" formatString="#,##0.00" aggregator="sum" visible="true">
     </Measure>
+    <Measure name="Saldo a Pagar" column="saldo_a_pagar" datatype="Numeric" formatString="#,##0.00" aggregator="sum" visible="true">
+    </Measure>
+    <Measure name="Qtd. Empenhos" column="sk_tempo" datatype="Integer" formatString="#,##0" aggregator="count" visible="true">
+    </Measure>
+    <CalculatedMember name="% Liquidado / Empenhado" formula="IIF([Measures].[Valor Empenhado] = 0, 0, [Measures].[Valor Liquidado] / [Measures].[Valor Empenhado] * 100)" dimension="Measures" visible="true">
+      <CalculatedMemberProperty name="FORMAT_STRING" value="0.00&#39;%&#39;">
+      </CalculatedMemberProperty>
+    </CalculatedMember>
+    <CalculatedMember name="% Pago / Empenhado" formula="IIF([Measures].[Valor Empenhado] = 0, 0, [Measures].[Valor Pago] / [Measures].[Valor Empenhado] * 100)" dimension="Measures" visible="true">
+      <CalculatedMemberProperty name="FORMAT_STRING" value="0.00&#39;%&#39;">
+      </CalculatedMemberProperty>
+    </CalculatedMember>
+    <CalculatedMember name="% Pago / Liquidado" formula="IIF([Measures].[Valor Liquidado] = 0, 0, [Measures].[Valor Pago] / [Measures].[Valor Liquidado] * 100)" dimension="Measures" visible="true">
+      <CalculatedMemberProperty name="FORMAT_STRING" value="0.00&#39;%&#39;">
+      </CalculatedMemberProperty>
+    </CalculatedMember>
   </Cube>
 </Schema>
