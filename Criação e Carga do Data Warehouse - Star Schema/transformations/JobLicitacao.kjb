@@ -292,7 +292,7 @@
       <attributes/>
       <specification_method>filename</specification_method>
       <trans_object_id/>
-      <filename>D:/devEnv/Data-Modeling/transformations/DimLicitacao.ktr</filename>
+      <filename>D:/devEnv/Data-Modeling/Criação e Carga do Data Warehouse - Star Schema/transformations/DimLicitacao.ktr</filename>
       <transname/>
       <arg_from_previous>N</arg_from_previous>
       <params_from_previous>N</params_from_previous>
@@ -331,7 +331,7 @@
       <attributes/>
       <specification_method>filename</specification_method>
       <trans_object_id/>
-      <filename>D:/devEnv/Data-Modeling/transformations/DimLicitacaoSentinel.ktr</filename>
+      <filename>D:/devEnv/Data-Modeling/Criação e Carga do Data Warehouse - Star Schema/transformations/DimLicitacaoSentinel.ktr</filename>
       <transname/>
       <arg_from_previous>N</arg_from_previous>
       <params_from_previous>N</params_from_previous>

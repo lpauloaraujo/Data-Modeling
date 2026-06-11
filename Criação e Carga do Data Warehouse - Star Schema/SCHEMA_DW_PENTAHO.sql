@@ -97,7 +97,7 @@ CREATE TABLE IF NOT EXISTS `tce_pb_dw`.`dim_programa_acao` (
   `date_from` TIMESTAMP NULL,
   `version` INT(11) NULL,
   PRIMARY KEY (`sk_programa_acao`),
-  INDEX `uk_prog_acao` (`codigo_programa` ASC, `codigo_acao` ASC) VISIBLE)
+  UNIQUE INDEX `uk_prog_acao` (`codigo_programa` ASC, `codigo_acao` ASC) VISIBLE)
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8mb4
 COLLATE = utf8mb4_0900_ai_ci;

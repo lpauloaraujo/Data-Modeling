@@ -604,7 +604,7 @@
       <schema_name/>
     </partitioning>
     <connection>tceDW</connection>
-    <sql>SELECT DISTINCT
+    <sql>SELECT
   numero_licitacao
 , numero_protocolo_tce
 , CAST(ano_licitacao AS SIGNED) AS ano_licitacao
@@ -612,7 +612,12 @@
 , data_homologacao
 , 'Não informado' AS modalidade
 FROM tce_pb.licitacao
-
+GROUP BY 
+numero_licitacao, 
+numero_protocolo_tce, 
+ano_licitacao, 
+objeto_licitacao, 
+data_homologacao
 </sql>
     <limit>0</limit>
     <lookup/>

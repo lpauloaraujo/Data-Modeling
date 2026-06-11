@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <transformation>
   <info>
-    <name>DimFonteRecurso</name>
+    <name>DimFornecedor</name>
     <description/>
     <extended_description/>
     <trans_version/>
@@ -426,9 +426,9 @@
     <clusterschemas>
     </clusterschemas>
     <created_user>-</created_user>
-    <created_date>2026/06/09 22:17:00.413</created_date>
+    <created_date>2026/06/10 09:00:45.895</created_date>
     <modified_user>-</modified_user>
-    <modified_date>2026/06/09 22:17:00.413</modified_date>
+    <modified_date>2026/06/10 09:00:45.895</modified_date>
     <key_for_session_key>H4sIAAAAAAAA/wMAAAAAAAAAAAA=</key_for_session_key>
     <is_key_private>N</is_key_private>
   </info>
@@ -436,13 +436,13 @@
   </notepads>
   <order>
     <hop>
-      <from>If field value is null</from>
-      <to>Dimension lookup/update</to>
+      <from>Table input</from>
+      <to>If field value is null</to>
       <enabled>Y</enabled>
     </hop>
     <hop>
-      <from>Table input</from>
-      <to>If field value is null</to>
+      <from>If field value is null</from>
+      <to>Dimension lookup/update</to>
       <enabled>Y</enabled>
     </hop>
   </order>
@@ -458,14 +458,14 @@
       <schema_name/>
     </partitioning>
     <schema>tce_pb_dw</schema>
-    <table>dim_fonte_recurso</table>
+    <table>dim_fornecedor</table>
     <connection>tceDW</connection>
-    <commit>100</commit>
+    <commit>5000</commit>
     <update>Y</update>
     <fields>
       <key>
-        <name>codigo_fonte_recurso</name>
-        <lookup>codigo_fonte_recurso</lookup>
+        <name>cpf_cnpj</name>
+        <lookup>cpf_cnpj</lookup>
       </key>
       <date>
         <name/>
@@ -473,17 +473,17 @@
         <to>date_to</to>
       </date>
       <field>
-        <name>descricao_fonte_recurso</name>
-        <lookup>descricao_fonte_recurso</lookup>
+        <name>nome</name>
+        <lookup>nome</lookup>
         <update>Insert</update>
       </field>
       <field>
-        <name>ano_fonte</name>
-        <lookup>ano_fonte</lookup>
+        <name>tipo_pessoa</name>
+        <lookup>tipo_pessoa</lookup>
         <update>Insert</update>
       </field>
       <return>
-        <name>sk_fonte_recurso</name>
+        <name>sk_fornecedor</name>
         <rename/>
         <creation_method>tablemax</creation_method>
         <use_autoinc>N</use_autoinc>
@@ -508,8 +508,8 @@
       </output>
     </remotesteps>
     <GUI>
-      <xloc>672</xloc>
-      <yloc>256</yloc>
+      <xloc>688</xloc>
+      <yloc>272</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
@@ -533,20 +533,20 @@
       </valuetypes>
     <fields>
       <field>
-        <name>codigo_fonte_recurso</name>
-        <value>-1</value>
+        <name>cpf_cnpj</name>
+        <value>NÃO INFORMADO</value>
         <mask/>
         <set_empty_string>N</set_empty_string>
       </field>
       <field>
-        <name>descricao_fonte_recurso</name>
-        <value>FONTE DE RECURSO NAO INFORMADA</value>
+        <name>nome</name>
+        <value>NÃO INFORMADO</value>
         <mask/>
         <set_empty_string>N</set_empty_string>
       </field>
       <field>
-        <name>ano_fonte</name>
-        <value>-1</value>
+        <name>tipo_pessoa</name>
+        <value>ND</value>
         <mask/>
         <set_empty_string>N</set_empty_string>
       </field>
@@ -560,8 +560,8 @@
       </output>
     </remotesteps>
     <GUI>
-      <xloc>480</xloc>
-      <yloc>256</yloc>
+      <xloc>512</xloc>
+      <yloc>272</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
@@ -577,9 +577,16 @@
       <schema_name/>
     </partitioning>
     <connection>tceDW</connection>
-    <sql>SELECT codigo_fonte_recurso, descricao_fonte_recurso, ano_fonte
-FROM tce_pb.fonte_recurso
-GROUP BY codigo_fonte_recurso, descricao_fonte_recurso, ano_fonte</sql>
+    <sql>SELECT
+    cpf_cnpj,
+    MAX(nome) AS nome,
+    CASE
+        WHEN LENGTH(REGEXP_REPLACE(cpf_cnpj, '[^0-9]', '')) = 11 THEN 'PF'
+        WHEN LENGTH(REGEXP_REPLACE(cpf_cnpj, '[^0-9]', '')) = 14 THEN 'PJ'
+        ELSE 'ND'
+    END AS tipo_pessoa
+FROM tce_pb.fornecedor
+GROUP BY cpf_cnpj;</sql>
     <limit>0</limit>
     <lookup/>
     <execute_each_row>N</execute_each_row>
@@ -590,11 +597,11 @@ GROUP BY codigo_fonte_recurso, descricao_fonte_recurso, ano_fonte</sql>
       <value-meta>
         <type>String</type>
         <storagetype>normal</storagetype>
-        <name>codigo_fonte_recurso</name>
+        <name>cpf_cnpj</name>
         <length>20</length>
         <precision>-1</precision>
         <origin>Table input</origin>
-        <comments>codigo_fonte_recurso</comments>
+        <comments>cpf_cnpj</comments>
         <conversion_Mask/>
         <decimal_symbol>,</decimal_symbol>
         <grouping_symbol>.</grouping_symbol>
@@ -613,11 +620,11 @@ GROUP BY codigo_fonte_recurso, descricao_fonte_recurso, ano_fonte</sql>
       <value-meta>
         <type>String</type>
         <storagetype>normal</storagetype>
-        <name>descricao_fonte_recurso</name>
+        <name>nome</name>
         <length>255</length>
         <precision>-1</precision>
         <origin>Table input</origin>
-        <comments>descricao_fonte_recurso</comments>
+        <comments>nome</comments>
         <conversion_Mask/>
         <decimal_symbol>,</decimal_symbol>
         <grouping_symbol>.</grouping_symbol>
@@ -636,11 +643,11 @@ GROUP BY codigo_fonte_recurso, descricao_fonte_recurso, ano_fonte</sql>
       <value-meta>
         <type>String</type>
         <storagetype>normal</storagetype>
-        <name>ano_fonte</name>
-        <length>1</length>
+        <name>tipo_pessoa</name>
+        <length>2</length>
         <precision>-1</precision>
         <origin>Table input</origin>
-        <comments>ano_fonte</comments>
+        <comments>tipo_pessoa</comments>
         <conversion_Mask/>
         <decimal_symbol>,</decimal_symbol>
         <grouping_symbol>.</grouping_symbol>
@@ -666,8 +673,8 @@ GROUP BY codigo_fonte_recurso, descricao_fonte_recurso, ano_fonte</sql>
       </output>
     </remotesteps>
     <GUI>
-      <xloc>288</xloc>
-      <yloc>256</yloc>
+      <xloc>368</xloc>
+      <yloc>272</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
